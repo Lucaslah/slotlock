@@ -3,6 +3,7 @@ package io.github.lucaargolo.slotlock.mixin;
 import io.github.lucaargolo.slotlock.Slotlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.world.ClientWorld;
@@ -27,7 +28,7 @@ public class MinecraftClientMixin {
 
     @SuppressWarnings("ConstantConditions")
     @Inject(at = @At("HEAD"), method = "joinWorld")
-    public void joinWorld(ClientWorld world, CallbackInfo info) {
+    public void joinWorld(ClientWorld world, DownloadingTerrainScreen.WorldEntryReason worldEntryReason, CallbackInfo ci) {
         Slotlock.handleJoinWorld(((MinecraftClient) ((Object) this)));
     }
 

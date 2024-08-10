@@ -25,8 +25,8 @@ operator fun Project.get(property: String): String {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 version = project["mod_version"]
@@ -35,7 +35,7 @@ group = project["maven_group"]
 val environment: Map<String, String> = System.getenv()
 val releaseName = "${name.split("-").joinToString(" ") { it.capitalize() }} ${(version as String).split("+")[0]}"
 val releaseType = (version as String).split("+")[0].split("-").let { if(it.isNotEmpty()) if(it[1] == "BETA" || it[1] == "ALPHA") it[1] else "ALPHA" else "RELEASE" }
-val releaseFile = "${buildDir}/libs/${base.archivesName.get()}-${version}.jar"
+val releaseFile = "${layout.buildDirectory}/libs/${base.archivesName.get()}-${version}.jar"
 val cfGameVersion = (version as String).split("+")[1].let{ if(!project["minecraft_version"].contains("-") && project["minecraft_version"].startsWith(it)) project["minecraft_version"] else "$it-Snapshot"}
 
 fun getChangeLog(): String {
@@ -103,7 +103,7 @@ tasks.processResources {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.release.set(17)
+    options.release.set(21)
 }
 
 java {
@@ -142,7 +142,7 @@ curseforge {
     project(closureOf<CurseProject> {
         id = project["curseforge_id"]
         changelog = getChangeLog()
-        releaseType = this@Build_gradle.releaseType.toLowerCase()
+        releaseType = this@Build_gradle.releaseType.lowercase()
         addGameVersion(cfGameVersion)
         addGameVersion("Fabric")
 
@@ -173,7 +173,7 @@ modrinth {
 
     versionNumber.set(version as String)
     versionName.set(releaseName)
-    versionType.set(releaseType.toLowerCase())
+    versionType.set(releaseType.lowercase())
 
     uploadFile.set(tasks.remapJar.get())
 

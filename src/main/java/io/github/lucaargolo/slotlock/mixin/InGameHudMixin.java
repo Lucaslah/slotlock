@@ -5,6 +5,7 @@ import io.github.lucaargolo.slotlock.Slotlock;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,18 +21,18 @@ public abstract class InGameHudMixin {
 
     @Shadow public abstract TextRenderer getTextRenderer();
 
-    private static final Identifier SLOT_LOCK_TEXTURE = new Identifier(Slotlock.MOD_ID, "textures/gui/lock_overlay.png");
+    private static final Identifier SLOT_LOCK_TEXTURE = Identifier.of(Slotlock.MOD_ID, "textures/gui/lock_overlay.png");
     private MatrixStack matrices;
     private int slotIndex = 0;
 
     @Inject(at = @At("HEAD"), method = "renderHotbar")
-    public void renderHotbar(float tickDelta, DrawContext context, CallbackInfo ci) {
+    public void renderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         matrices = context.getMatrices();
         slotIndex = 0;
     }
 
     @Inject(at = @At("HEAD"), method = "renderHotbarItem")
-    public void renderHotbarItem(DrawContext context, int x, int y, float tickDelta, PlayerEntity player, ItemStack stack, int seed, CallbackInfo ci) {
+    public void renderHotbarItem(DrawContext context, int x, int y, RenderTickCounter tickCounter, PlayerEntity player, ItemStack stack, int seed, CallbackInfo ci) {
         if (Slotlock.isLocked(slotIndex)) {
             if (player.getInventory().getStack(slotIndex).isEmpty()) {
                 Slotlock.unlockSlot(slotIndex);

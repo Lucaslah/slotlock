@@ -33,7 +33,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
         super(title);
     }
 
-    private static final Identifier SLOT_LOCK_TEXTURE = new Identifier(Slotlock.MOD_ID, "textures/gui/lock_overlay.png");
+    private static final Identifier SLOT_LOCK_TEXTURE = Identifier.of(Slotlock.MOD_ID, "textures/gui/lock_overlay.png");
     @Shadow @Nullable protected Slot focusedSlot;
     @Shadow @Final protected T handler;
 
