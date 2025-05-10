@@ -251,7 +251,7 @@ public class Slotlock implements ClientModInitializer {
 
     public static void handleDropSelectedItem(PlayerInventory playerInventory, CallbackInfoReturnable<Boolean> info) {
         if(!MinecraftClient.getInstance().isOnThread()) return;
-        int selectedSlot = playerInventory.selectedSlot;
+        int selectedSlot = playerInventory.getSelectedSlot();
         if(Slotlock.isLocked(selectedSlot)) {
             info.setReturnValue(false);
         }
@@ -262,7 +262,7 @@ public class Slotlock implements ClientModInitializer {
         boolean toPress = false;
         while(options.swapHandsKey.wasPressed()) {
             if (!player.isSpectator()) {
-                int selectedSlot = player.getInventory().selectedSlot;
+                int selectedSlot = player.getInventory().getSelectedSlot();
                 if(!Slotlock.isLocked(selectedSlot) && !Slotlock.isLocked(40)) {
                     toPress = true;
                 }

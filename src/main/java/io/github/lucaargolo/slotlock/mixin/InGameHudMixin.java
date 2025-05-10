@@ -1,10 +1,10 @@
 package io.github.lucaargolo.slotlock.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lucaargolo.slotlock.Slotlock;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,8 +38,7 @@ public abstract class InGameHudMixin {
                 Slotlock.unlockSlot(slotIndex);
             }
             else {
-                RenderSystem.setShaderTexture(0, SLOT_LOCK_TEXTURE);
-                context.drawTexture(SLOT_LOCK_TEXTURE, x, y, 0, 0, 16, 16);
+                context.drawTexture(RenderLayer::getGuiTextured, SLOT_LOCK_TEXTURE, x, y, 0f, 0f, 16, 16, 16, 16);
             }
         }
         slotIndex++;

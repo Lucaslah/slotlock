@@ -1,6 +1,5 @@
 package io.github.lucaargolo.slotlock.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lucaargolo.slotlock.Slotlock;
 import io.github.lucaargolo.slotlock.mixed.HandledScreenMixed;
 import net.minecraft.client.MinecraftClient;
@@ -8,6 +7,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
@@ -93,8 +93,8 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
                 Slotlock.unlockSlot(((SlotAccessor) finalSlot).getIndex());
                 return;
             }
-            RenderSystem.setShaderTexture(0, SLOT_LOCK_TEXTURE);
-            context.drawTexture(SLOT_LOCK_TEXTURE, slot.x, slot.y, 0, 0, 16, 16);
+
+            context.drawTexture(RenderLayer::getGuiTextured, SLOT_LOCK_TEXTURE, slot.x, slot.y, 0f, 0f, 16, 16, 16, 16);
         }
     }
 

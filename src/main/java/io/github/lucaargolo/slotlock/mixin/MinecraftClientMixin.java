@@ -38,9 +38,9 @@ public class MinecraftClientMixin {
     }
 
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;getSlotWithStack(Lnet/minecraft/item/ItemStack;)I"), method = "doItemPick", locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-    public void handleItemPick(CallbackInfo ci, boolean bl, BlockEntity blockEntity, ItemStack itemStack, HitResult.Type type, PlayerInventory playerInventory) {
-        Slotlock.handleItemPick(playerInventory.selectedSlot, ci);
-    }
+//    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;getSlotWithStack(Lnet/minecraft/item/ItemStack;)I"), method = "doItemPick", locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+//    public void handleItemPick(CallbackInfo ci, boolean bl, BlockEntity blockEntity, ItemStack itemStack, HitResult.Type type, PlayerInventory playerInventory) {
+//        Slotlock.handleItemPick(playerInventory.getSelectedSlot(), ci);
+//    }
 
 }
