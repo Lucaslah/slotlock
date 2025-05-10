@@ -6,17 +6,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    container:
-      image: openjdk:21-jdk
-      options: --user root
     
     steps:
-    - uses: actions/checkout@v2.2.0
+    - uses: actions/checkout@v4
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
-    - run: |
-          ./gradlew build
+    - run: ./gradlew build
     - uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
